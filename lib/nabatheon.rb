@@ -18,9 +18,9 @@ module Nabatheon
       sentence.get(:tokens).each do |token|
         entity_tag = token.get(:named_entity_tag).to_s
         lemma      = token.get(:lemma).to_s
-        named_lemma << [entity_tag, lemma] unless entity_tag == 'O'
+        named_lemma << { named_entity: entity_tag, type: lemma } #unless entity_tag == 'O'
       end
     end
-    puts named_lemma.inspect
+    named_lemma
   end
 end

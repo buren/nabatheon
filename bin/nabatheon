@@ -8,4 +8,4 @@ else
   ARGV.join(' ')
 end
 
-Nabatheon.annotate(text)
+puts Nabatheon.annotate(text).inspect
