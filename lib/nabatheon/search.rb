@@ -1,5 +1,5 @@
 module Nabatheon
-  class Searches
+  class Search
     attr_accessor :type, :value
 
     def initialize(type, value)
