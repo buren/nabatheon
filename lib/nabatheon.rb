@@ -21,6 +21,6 @@ module Nabatheon
         named_lemma << [entity_tag, lemma] unless entity_tag == 'O'
       end
     end
-    puts named_lemma.inspect
+    named_lemma
   end
 end
