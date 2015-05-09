@@ -3,16 +3,15 @@ module Nabatheon
     PERSON = 'PERSON'
     ORG    = 'ORGANIZATION'
 
-    def self.apply(*args)
-      self.new.apply(*args)
+    def self.apply_on(*args)
+      self.new.apply_on(*args)
     end
 
-    def apply(named_entities)
+    def apply_on(named_entities)
       searches = []
       previous = Entity.new(nil, nil)
       named_entities.map do |entity_arr|
-        puts "e: #{entity_arr}"
-        entity = Entity.new(entity_arr[0], entity_arr[1])
+        entity = Entity.new(entity_arr[:named_entity], entity_arr[:type])
         if rule_of_two?(entity.type, previous.type)
           searches.last.value = "#{searches.last.value} #{entity.value}"
         else

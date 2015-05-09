@@ -1,4 +1,8 @@
 require 'nabatheon/version'
+require 'nabatheon/entity'
+require 'nabatheon/rule'
+require 'nabatheon/search'
+
 require 'stanford-core-nlp'
 
 module Nabatheon
@@ -24,8 +28,7 @@ module Nabatheon
     tagged
   end
 
-  def self.relevant_searches_for(text)
-    tags = annotate(text)
-    Rule.apply_on(tags)
+  def self.relevant_searches_for(annotations)
+    Rule.apply_on(annotations)
   end
 end
