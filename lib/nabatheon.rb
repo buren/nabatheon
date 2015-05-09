@@ -1,4 +1,8 @@
 require 'nabatheon/version'
+require 'nabatheon/entity'
+require 'nabatheon/rule'
+require 'nabatheon/search'
+
 require 'stanford-core-nlp'
 
 module Nabatheon
@@ -9,18 +13,22 @@ module Nabatheon
   StanfordCoreNLP.use :english
   Pipeline = StanfordCoreNLP.load(:tokenize, :ssplit, :pos, :lemma, :parse, :ner)
 
-  def self.annotate(raw_text)
-    text = StanfordCoreNLP::Annotation.new(raw_text)
-    Pipeline.annotate(text)
+  def self.annotate(text)
+    annotated_text = StanfordCoreNLP::Annotation.new(text)
+    Pipeline.annotate(annotated_text)
 
-    named_lemma = []
-    text.get(:sentences).each do |sentence|
+    tagged = []
+    annotated_text.get(:sentences).each do |sentence|
       sentence.get(:tokens).each do |token|
         entity_tag = token.get(:named_entity_tag).to_s
         lemma      = token.get(:lemma).to_s
-        named_lemma << [entity_tag, lemma] unless entity_tag == 'O'
+        tagged << { named_entity: entity_tag, type: lemma }
       end
     end
-    named_lemma
+    tagged
+  end
+
+  def self.relevant_searches_for(annotations)
+    Rule.apply_on(annotations)
   end
 end
