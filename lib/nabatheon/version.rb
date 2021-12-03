@@ -1,3 +1,0 @@
-module Nabatheon
-  VERSION = '0.0.3'
-end
